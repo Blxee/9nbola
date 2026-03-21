@@ -21,3 +21,21 @@ t_board *board_create(int bomb_amount)
   }
   return (temp);
 }
+void board_draw(t_board *board){
+int i;
+int j;
+i = 0;
+(void)board;
+printf("+-----------------------+\n");
+while(i < ROWS){
+    j = 0;
+    printf("|");
+    while(j < COLS){
+      printf("#|");
+      j++;
+    }
+    printf("\n");
+    i++;
+  }
+  printf("+-----------------------+\n");
+}
