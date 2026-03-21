@@ -10,10 +10,10 @@
 
 typedef struct s_square
 {
-  bool locked; // msdod
-  bool flag; // raya
-  bool is_bomb; // wach 9nbola
-  int  bombs; // how much 9nable?
+  bool locked; // #
+  bool flag; // >
+  bool is_bomb; // 
+  int  bombs; // *
 } t_square;
 
 typedef struct s_board

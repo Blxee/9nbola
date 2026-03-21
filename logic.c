@@ -7,14 +7,15 @@ t_board *board_create(int bomb_amount)
 
   if(!temp)
     return NULL;
+  temp->bomb_amount = bomb_amount;
   i = 0;
   while(i < ROWS){
-  j = 0;
+    j = 0;
     while(j < COLS){
-      temp->grid[i][j].locked = true;
-      temp->grid[i][j].flag = true;
-      temp->grid[i][j].is_bomb = true;
-      temp->grid[i][j].bombs = bomb_amount;
+      temp->grid[i][j].locked = false;
+      temp->grid[i][j].flag = false;
+      temp->grid[i][j].is_bomb = false;
+      temp->grid[i][j].bombs = 3;
       j++;
     }
     i++;
@@ -22,16 +23,24 @@ t_board *board_create(int bomb_amount)
   return (temp);
 }
 void board_draw(t_board *board){
-int i;
-int j;
-i = 0;
-(void)board;
-printf("+-----------------------+\n");
-while(i < ROWS){
+  int i;
+  int j;
+  i = 0;
+  printf("+-----------------------+\n");
+  while(i < ROWS){
     j = 0;
     printf("|");
     while(j < COLS){
-      printf("#|");
+      if(board->grid[i][j].locked)
+        printf("#|");
+      else if(board->grid[i][j].flag)
+        printf(">|");
+      else if(board->grid[i][j].is_bomb)
+        printf("*|");
+      else if(board->grid[i][j].bombs == 0)
+        printf(" |");
+      else
+        printf("%d|",board->grid[i][j].bombs);
       j++;
     }
     printf("\n");
