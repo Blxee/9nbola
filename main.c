@@ -6,11 +6,10 @@
 
 int main(void)
 {
-  t_board *board = board_create();
-  WINDOW *stdscr = initscr();
+  t_board *board = board_create(12);
+  t_draw *draw = draw_create();
 
   draw_board(stdscr, board);
-  refresh();
   getch();
-  endwin();
+  draw_destroy(&draw);
 }
