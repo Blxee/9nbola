@@ -1,5 +1,6 @@
 CC = cc
 CFLAGS = -Werror -Wextra -Wall
+LDFLAGS = -lncurses
 NAME = 9nbola
 SRC = $(wildcard *.c)
 OBJ = $(SRC:.c=.o)
@@ -8,9 +9,9 @@ INCLUDE = $(wildcard *.h)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $@
+	$(CC) $(CFLAGS) $(OBJ) -o $@ $(LDFLAGS)
 
-%.c: %.o $(INCLUDE)
+%.o: %.c $(INCLUDE)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
