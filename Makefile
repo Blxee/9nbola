@@ -6,6 +6,9 @@ SRC = $(wildcard *.c)
 OBJ = $(SRC:.c=.o)
 INCLUDE = $(wildcard *.h)
 
+run: $(NAME)
+	./$(NAME)
+
 all: $(NAME)
 
 $(NAME): $(OBJ)
