@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include "logic.h"
+
 
 int main(void)
 {
-  printf("Hello, World!");
+  printf("hello world\n");
 }
