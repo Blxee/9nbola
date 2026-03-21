@@ -4,5 +4,6 @@
 
 int main(void)
 {
-  printf("hello world\n");
+  t_board *board = board_create(12);
+  printf("bombs: %d\n", board->grid[0][0].bombs);
 }
