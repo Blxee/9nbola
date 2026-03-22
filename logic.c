@@ -21,11 +21,16 @@ t_board *board_create(int bomb_amount)
     i++;
   }
   srand(time(NULL));
+  int user[11] = {0};
   int k = 0;
   i = 0;
   while(k < temp->bomb_amount){
     int x = rand() % COLS;
     int y = rand() % ROWS;
+    if(user[x]==0&&user[y]==0){
+    user[x] = 1;
+    user[y] = 1;
+    }
     temp->grid[x][y].is_bomb = true;
     int x2, y2;
     i = -1;
