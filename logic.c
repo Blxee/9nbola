@@ -15,10 +15,40 @@ t_board *board_create(int bomb_amount)
       temp->grid[i][j].locked = false;
       temp->grid[i][j].flag = false;
       temp->grid[i][j].is_bomb = false;
-      temp->grid[i][j].bombs = 3;
+      temp->grid[i][j].bombs = 0 ;
       j++;
     }
     i++;
+  }
+  srand(time(NULL));
+  int user[11] = {0};
+  int k = 0;
+  i = 0;
+  while(k < temp->bomb_amount){
+    int x = rand() % COLS;
+    int y = rand() % ROWS;
+    if(user[x]==0&&user[y]==0){
+    user[x] = 1;
+    user[y] = 1;
+    }
+    temp->grid[x][y].is_bomb = true;
+    int x2, y2;
+    i = -1;
+    while(i <= 1){
+      j = -1;
+      while(j <= 1){
+        x2 = x + i;
+        y2 = y + j;
+        j++;
+        if(x2 == x&&y2 == y)
+          continue;
+        if(x2 < 0||x2 >= 12||y2 < 0||y2 >= 12)
+          continue;
+        temp->grid[x2][y2].bombs++;
+      }
+      i++;
+    }
+    k++;
   }
   return (temp);
 }
@@ -26,6 +56,7 @@ void board_draw(t_board *board){
   int i;
   int j;
   i = 0;
+
   printf("+-----------------------+\n");
   while(i < ROWS){
     j = 0;
@@ -47,4 +78,5 @@ void board_draw(t_board *board){
     i++;
   }
   printf("+-----------------------+\n");
+
 }
