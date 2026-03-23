@@ -1,10 +1,15 @@
 #include <stdio.h>
+#include <ncurses.h>
+#include "draw.h"
 #include "logic.h"
 
 
 int main(void)
 {
   t_board *board = board_create(12);
-  printf("bombs: %d\n", board->grid[0][0].bombs);
-  board_draw(board);
+  t_draw *draw = draw_create();
+
+  draw_board(stdscr, board);
+  getch();
+  draw_destroy(&draw);
 }
