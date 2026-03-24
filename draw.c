@@ -40,8 +40,8 @@ static void draw_wall(WINDOW *stdscr)
   attron(COLOR_PAIR(WALL_COLOR));
   addch('+');
   while (i++ < COLS - 1)
-    addstr("--");
-  addstr("-+");
+    addstr("==");
+  addstr("=+");
   attroff(COLOR_PAIR(WALL_COLOR));
 }
 
@@ -56,7 +56,7 @@ static void draw_square(WINDOW *stdscr, t_square square)
   else if (square.bombs > 0)
     addch(('0' + square.bombs % 9) | COLOR_PAIR(NUMBER_COLOR + square.bombs % 9) | A_BOLD);
   else
-    addch('.' | COLOR_PAIR(EMPTY_COLOR));
+    addch('.' | COLOR_PAIR(EMPTY_COLOR) | A_DIM);
 }
 
 t_event draw_get_event(t_draw *draw)
