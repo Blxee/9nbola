@@ -53,7 +53,7 @@ t_board *board_create(int bomb_amount)
   return (temp);
 }
 void board_draw(t_board *board){
-  int i;board_open_square(board,3,3);board_open_square(board,3,3);
+  int i;
   int j;
   i = 0;
 
@@ -80,26 +80,39 @@ void board_draw(t_board *board){
   printf("+-----------------------+\n");
 
 }
+void reveal_entire_board(t_board *board) {
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            board->grid[i][j].locked = false;
+        }
+    }
+}
 void board_open_square(t_board *board, int x, int y)
 {
-  if(x < 0||x >= ROWS||y < 0||y >= COLS)
+  if(x < 0 || x >= ROWS || y < 0 || y >= COLS)
     return;
-  if(board->grid[x][y].is_bomb == true)
-    return;
+
   if(board->grid[x][y].locked == false)
-  return;
+    return;
+
   board->grid[x][y].locked = false;
-  if(board->grid[x][y].bombs == 0){
-  int i = -1;
-  while(i <= 1){
-    int j = -1;
-    while(j <= 1){
+  
+  if(board->grid[x][y].is_bomb == true){
+    reveal_entire_board(board);
+    return;
+  }
+
+  if(board->grid[x][y].bombs == 0) {
+    int i = -1;
+    while(i <= 1) {
+      int j = -1;
+      while(j <= 1) {
         int x2 = x + i;
         int y2 = y + j;
-        board_open_square(board,x2,y2);
+        board_open_square(board, x2, y2);
         j++;
       }
-    i++;
+      i++;
     }
   }
 }

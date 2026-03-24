@@ -19,7 +19,7 @@ typedef struct s_square
 
 typedef struct s_board
 {
-  t_square grid[12][12];
+  t_square grid[ROWS][COLS];
   int bomb_amount; // l3adad dial 9nabl
 } t_board;
 
