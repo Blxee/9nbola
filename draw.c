@@ -10,8 +10,13 @@ t_draw *draw_create()
 
   if (!draw)
     return (NULL);
-  initscr();
+  draw->stdscr = initscr();
+  // draw->cursor_pos[0] = COLS / 2;
+  // draw->cursor_pos[1] = ROWS / 2;
+  draw->cursor_pos[0] = 3;
+  draw->cursor_pos[1] = 2;
   start_color();
+  keypad(draw->stdscr, true);
   init_pair(BOMB_COLOR, COLOR_RED, COLOR_BLACK);
   init_pair(LOCKED_COLOR, COLOR_BLACK, COLOR_WHITE);
   init_pair(FLAG_COLOR, COLOR_GREEN, COLOR_WHITE);
@@ -55,20 +60,62 @@ static void draw_square(WINDOW *stdscr, t_square square)
     addch('.' | COLOR_PAIR(EMPTY_COLOR));
 }
 
-void draw_board(WINDOW *stdscr, t_board *board)
+t_event draw_get_event(t_draw *draw)
 {
+  WINDOW *stdscr;
+  int input;
+
+  stdscr = draw->stdscr;
+  input = getch();
+
+  switch (input)
+  {
+    case 'a':
+    case 'h':
+    case KEY_LEFT:
+      return EVENT_MOVE_LEFT;
+    case 'd':
+    case 'l':
+    case KEY_RIGHT:
+      return EVENT_MOVE_RIGHT;
+    case 'w':
+    case 'k':
+    case KEY_UP:
+      return EVENT_MOVE_UP;
+    case 's':
+    case 'j':
+    case KEY_DOWN:
+      return EVENT_MOVE_DOWN;
+    case KEY_ENTER:
+      return EVENT_FLAG;
+    case ' ':
+      return EVENT_OPEN;
+    case 27:
+    case 'q':
+      return EVENT_QUIT;
+    default:
+      return EVENT_NONE;
+  }
+}
+
+void draw_board(t_draw *draw, t_board *board)
+{
+  WINDOW *stdscr;
   int max_x, max_y;
   int x, y;
+  int offset[2];
 
-  (void)board;
+  stdscr = draw->stdscr;
   getmaxyx(stdscr, max_y, max_x);
+  offset[0] = max_x / 2 - COLS;
+  offset[1] = max_y / 2 - ROWS / 2;
 
-  move(max_y / 2 - ROWS / 2 - 1, max_x / 2 - COLS);
+  move(offset[1] - 1, offset[0]);
   draw_wall(stdscr);
   y = 0;
   while (y < ROWS)
   {
-    move(max_y / 2 - ROWS / 2 + y, max_x / 2 - COLS);
+    move(offset[1] + y, offset[0]);
     addch('|' | COLOR_PAIR(WALL_COLOR));
     x = 0;
     while (x < COLS)
@@ -87,8 +134,9 @@ void draw_board(WINDOW *stdscr, t_board *board)
     addch('\n');
     y++;
   }
-  move(max_y / 2 - ROWS / 2 + 12, max_x / 2 - COLS);
+  move(offset[1] + 12, offset[0]);
   draw_wall(stdscr);
+  move(offset[1] + draw->cursor_pos[1], offset[0] + draw->cursor_pos[0] * 2 + 1);
   refresh();
 }
 

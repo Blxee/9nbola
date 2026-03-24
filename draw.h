@@ -14,10 +14,23 @@
 typedef struct s_draw
 {
   WINDOW *stdscr;
+  int cursor_pos[2];
 } t_draw;
 
+typedef enum e_event {
+  EVENT_MOVE_LEFT,
+  EVENT_MOVE_RIGHT,
+  EVENT_MOVE_UP,
+  EVENT_MOVE_DOWN,
+  EVENT_OPEN,
+  EVENT_FLAG,
+  EVENT_QUIT,
+  EVENT_NONE,
+} t_event;
+
 t_draw *draw_create();
-void draw_board(WINDOW *stdscr, t_board *board);
+t_event draw_get_event(t_draw *draw);
+void draw_board(t_draw *draw, t_board *board);
 void draw_destroy(t_draw **draw);
 
 #endif
