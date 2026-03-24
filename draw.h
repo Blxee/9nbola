@@ -7,9 +7,9 @@
 #define BOMB_COLOR (1)
 #define LOCKED_COLOR (2)
 #define FLAG_COLOR (3)
-#define NUMBER_COLOR (4)
-#define EMPTY_COLOR (5)
-#define WALL_COLOR (6)
+#define EMPTY_COLOR (4)
+#define WALL_COLOR (5)
+#define NUMBER_COLOR (100)
 
 typedef struct s_draw
 {

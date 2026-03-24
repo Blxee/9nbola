@@ -15,9 +15,17 @@ t_draw *draw_create()
   init_pair(BOMB_COLOR, COLOR_RED, COLOR_BLACK);
   init_pair(LOCKED_COLOR, COLOR_BLACK, COLOR_WHITE);
   init_pair(FLAG_COLOR, COLOR_GREEN, COLOR_WHITE);
-  init_pair(NUMBER_COLOR, COLOR_BLUE, COLOR_BLACK);
   init_pair(EMPTY_COLOR, COLOR_WHITE, COLOR_BLACK);
   init_pair(WALL_COLOR, COLOR_YELLOW, COLOR_BLACK);
+
+  init_pair(NUMBER_COLOR + 1, COLOR_CYAN, COLOR_BLACK);
+  init_pair(NUMBER_COLOR + 2, COLOR_BLUE, COLOR_BLACK);
+  init_pair(NUMBER_COLOR + 3, COLOR_GREEN, COLOR_BLACK);
+  init_pair(NUMBER_COLOR + 4, COLOR_YELLOW, COLOR_BLACK);
+  init_pair(NUMBER_COLOR + 5, COLOR_MAGENTA, COLOR_BLACK);
+  init_pair(NUMBER_COLOR + 6, COLOR_RED, COLOR_BLACK);
+  init_pair(NUMBER_COLOR + 7, COLOR_RED, COLOR_BLACK);
+  init_pair(NUMBER_COLOR + 8, COLOR_RED, COLOR_BLACK);
   return (draw);
 }
 
@@ -42,7 +50,7 @@ static void draw_square(WINDOW *stdscr, t_square square)
   else if (square.is_bomb)
     addch('*' | COLOR_PAIR(BOMB_COLOR) | A_BOLD | A_BLINK);
   else if (square.bombs > 0)
-    addch(('0' + square.bombs % 9) | COLOR_PAIR(NUMBER_COLOR) | A_BOLD);
+    addch(('0' + square.bombs % 9) | COLOR_PAIR(NUMBER_COLOR + square.bombs % 9) | A_BOLD);
   else
     addch('.' | COLOR_PAIR(EMPTY_COLOR));
 }
@@ -67,7 +75,12 @@ void draw_board(WINDOW *stdscr, t_board *board)
     {
       draw_square(stdscr, board->grid[y][x]);
       if (x < COLS - 1)
-        addch(' ' | COLOR_PAIR(WALL_COLOR));
+      {
+        if (board->grid[y][x].locked || (x < COLS && board->grid[y][x + 1].locked))
+          addch(' ' | COLOR_PAIR(LOCKED_COLOR));
+        else
+          addch(' ' | COLOR_PAIR(EMPTY_COLOR));
+      }
       x++;
     }
     addch('|' | COLOR_PAIR(WALL_COLOR));
