@@ -22,6 +22,7 @@ t_draw *draw_create()
   init_pair(FLAG_COLOR, COLOR_GREEN, COLOR_WHITE);
   init_pair(EMPTY_COLOR, COLOR_WHITE, COLOR_BLACK);
   init_pair(WALL_COLOR, COLOR_YELLOW, COLOR_BLACK);
+  init_pair(BANNER_COLOR, COLOR_MAGENTA, COLOR_BLACK);
 
   init_pair(NUMBER_COLOR + 1, COLOR_CYAN, COLOR_BLACK);
   init_pair(NUMBER_COLOR + 2, COLOR_BLUE, COLOR_BLACK);
@@ -98,6 +99,25 @@ t_event draw_get_event(t_draw *draw)
   }
 }
 
+static void draw_banner(t_draw *draw, int max_x)
+{
+  WINDOW *stdscr;
+  
+  stdscr = draw->stdscr;
+  attron(COLOR_PAIR(BANNER_COLOR) | A_BOLD);
+  move(1, max_x / 2 - 16);
+  addstr("  ___        _           _       ");
+  move(2, max_x / 2 - 16);
+  addstr(" / _ \\ _ __ | |__   ___ | | __ _ ");
+  move(3, max_x / 2 - 16);
+  addstr("| (_) | '_ \\| '_ \\ / _ \\| |/ _` |");
+  move(4, max_x / 2 - 16);
+  addstr(" \\__, | | | | |_) | (_) | | (_| |");
+  move(5, max_x / 2 - 16);
+  addstr("   /_/|_| |_|_.__/ \\___/|_|\\__,_|");
+  attroff(COLOR_PAIR(BANNER_COLOR) | A_BOLD);
+}
+
 void draw_board(t_draw *draw, t_board *board)
 {
   WINDOW *stdscr;
@@ -108,8 +128,8 @@ void draw_board(t_draw *draw, t_board *board)
   stdscr = draw->stdscr;
   getmaxyx(stdscr, max_y, max_x);
   offset[0] = max_x / 2 - COLS;
-  offset[1] = max_y / 2 - ROWS / 2;
-
+  offset[1] = max_y / 2 - ROWS / 2 + 2;
+  draw_banner(draw, max_x);
   move(offset[1] - 1, offset[0]);
   draw_wall(stdscr);
   y = 0;

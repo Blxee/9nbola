@@ -9,6 +9,7 @@
 #define FLAG_COLOR (3)
 #define EMPTY_COLOR (4)
 #define WALL_COLOR (5)
+#define BANNER_COLOR (6)
 #define NUMBER_COLOR (100)
 
 typedef struct s_draw
