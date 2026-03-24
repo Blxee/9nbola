@@ -11,10 +11,8 @@ t_draw *draw_create()
   if (!draw)
     return (NULL);
   draw->stdscr = initscr();
-  // draw->cursor_pos[0] = COLS / 2;
-  // draw->cursor_pos[1] = ROWS / 2;
-  draw->cursor_pos[0] = 3;
-  draw->cursor_pos[1] = 2;
+  draw->cursor_pos[0] = COLS / 2;
+  draw->cursor_pos[1] = ROWS / 2;
   start_color();
   keypad(draw->stdscr, true);
   init_pair(BOMB_COLOR, COLOR_RED, COLOR_BLACK);
@@ -129,6 +127,7 @@ void draw_board(t_draw *draw, t_board *board)
   getmaxyx(stdscr, max_y, max_x);
   offset[0] = max_x / 2 - COLS;
   offset[1] = max_y / 2 - ROWS / 2 + 2;
+  clear();
   draw_banner(draw, max_x);
   move(offset[1] - 1, offset[0]);
   draw_wall(stdscr);
