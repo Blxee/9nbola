@@ -27,12 +27,12 @@ t_board *board_create(int bomb_amount)
   while(k < temp->bomb_amount){
     int x = rand() % COLS;
     int y = rand() % ROWS;
-    if(user[x]==0&&user[y]==0){
+    if(user[x]==0&&user[y] == 0){
     user[x] = 1;
     user[y] = 1;
     }
     temp->grid[x][y].is_bomb = true;
-    int x2, y2;
+    int x2 ,y2;
     i = -1;
     while(i <= 1){
       j = -1;
@@ -114,5 +114,18 @@ void board_open_square(t_board *board, int x, int y)
       }
       i++;
     }
+  }
+}
+void board_flag_square(t_board *board, int x, int y)
+{
+  if(x < 0||x >= ROWS||y < 0||y >= COLS)
+    return;
+   if(board->grid[x][y].locked == false)
+    return;
+   if(board->grid[x][y].flag == true){
+    board->grid[x][y].flag = false;
+  }
+  else{
+    board->grid[x][y].flag = true;
   }
 }
