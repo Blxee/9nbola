@@ -14,6 +14,9 @@ $(NAME): $(OBJ)
 run: $(NAME)
 	./$(NAME)
 
+install: $(NAME)
+	cp $(NAME) $(HOME)/.local/bin/
+
 %.o: %.c $(INCLUDE)
 	$(CC) $(CFLAGS) -c $< -o $@
 
