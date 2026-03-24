@@ -37,7 +37,7 @@ int main(void)
         board_open_square(board, draw->cursor_pos[1], draw->cursor_pos[0]);
         break;
       case EVENT_FLAG:
-        // board_flag_square(board, draw->cursor_pos[1], draw->cursor_pos[0]);
+        board_flag_square(board, draw->cursor_pos[1], draw->cursor_pos[0]);
         break;
       case EVENT_QUIT:
         draw_destroy(&draw);

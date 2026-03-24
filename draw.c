@@ -85,7 +85,7 @@ t_event draw_get_event(t_draw *draw)
     case 'j':
     case KEY_DOWN:
       return EVENT_MOVE_DOWN;
-    case KEY_ENTER:
+    case '\n':
       return EVENT_FLAG;
     case ' ':
       return EVENT_OPEN;
