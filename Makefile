@@ -15,6 +15,7 @@ run: $(NAME)
 	./$(NAME)
 
 install: $(NAME)
+	mkdir -p $(HOME)/.local/bin/
 	cp $(NAME) $(HOME)/.local/bin/
 
 %.o: %.c $(INCLUDE)
