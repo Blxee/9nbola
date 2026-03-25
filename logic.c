@@ -92,6 +92,9 @@ void board_open_square(t_board *board, int x, int y)
   if(x < 0 || x >= ROWS || y < 0 || y >= COLS)
     return;
 
+  if(board->grid[x][y].flag == true)
+    return;
+
   if(board->grid[x][y].locked == false)
     return;
 
@@ -120,9 +123,9 @@ void board_flag_square(t_board *board, int x, int y)
 {
   if(x < 0||x >= ROWS||y < 0||y >= COLS)
     return;
-   if(board->grid[x][y].locked == false)
+  else if(board->grid[x][y].locked == false)
     return;
-   if(board->grid[x][y].flag == true){
+  else if(board->grid[x][y].flag == true){
     board->grid[x][y].flag = false;
   }
   else{
